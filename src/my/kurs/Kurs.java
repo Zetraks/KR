@@ -121,7 +121,29 @@ public class Kurs extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         
+        float vats, volts, amps,s,d;
+         int i;
+         float [][] koef;
+         koef = new float[2][6];
+         koef[0][0]= (float) 0.034  ;koef[1][0]=80  ;
+         koef[0][1]=(float) 0.25  ;koef[1][1]=59  ;
+         koef[0][2]=(float) 0.06  ;koef[1][2]=(float)40.8  ;
+         koef[0][3]=(float) 0.127  ;koef[1][3]=(float) 24.6  ;
+         koef[0][4]=(float) 0.2  ;koef[1][4]=(float)12.8  ;
+         koef[0][5]=(float)0.18  ;koef[1][5]=1  ;
+    vats = Float.parseFloat(jTextField1.getText());
+    volts = Float.parseFloat(jTextField2.getText());
+    amps = vats/volts;
+    i=  jComboBox1.getSelectedIndex();
+   if (amps>=10) d= (float) Math.pow(amps/koef[1][i],(2/3));
+   else d= (float) (amps*koef[0][i]+0.005);
+   String a =(String) jComboBox1.getSelectedItem();
+   s =   (float) (3.14 *(d*d/4));
+   jTextArea1.setText(null);
+   jTextArea1.append(("Нужен предохранитель на "+String.format("%.4f", amps)+"А"+ "\n"));
+   jTextArea1.append(("Материал плавкой вставки "+ a + "\n"));
+   jTextArea1.append(("Диаметр" +String.format("%.4f",d)+" мм"+ "\n"));
+   jTextArea1.append(("Сечение "+String.format("%.6f",s)+" мм^2"));
       
     }//GEN-LAST:event_jButton1ActionPerformed
 
