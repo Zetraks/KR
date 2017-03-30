@@ -48,8 +48,18 @@ public class Kurs extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Медь", "Аллюминий", "Никель", "Железо", "Олово", "Свинец" }));
 
         jTextField1.setText("100");
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
 
         jTextField2.setText("220");
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField2KeyPressed(evt);
+            }
+        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -133,6 +143,10 @@ public class Kurs extends javax.swing.JFrame {
          koef[0][5]=(float)0.18  ;koef[1][5]=1  ;
     vats = Float.parseFloat(jTextField1.getText());
     volts = Float.parseFloat(jTextField2.getText());
+    if (volts<=0) {jTextArea1.setText(null); 
+                    jTextArea1.append(("Напряжение не может быть 0 вольт"));
+                    }
+    else {
     amps = vats/volts;
     i=  jComboBox1.getSelectedIndex();
    if (amps>=10) d= (float) Math.pow(amps/koef[1][i],(2/3));
@@ -144,12 +158,40 @@ public class Kurs extends javax.swing.JFrame {
    jTextArea1.append(("Материал плавкой вставки "+ a + "\n"));
    jTextArea1.append(("Диаметр" +String.format("%.4f",d)+" мм"+ "\n"));
    jTextArea1.append(("Сечение "+String.format("%.6f",s)+" мм^2"));
-      
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
     dispose();        //закрыть форму
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+            //Фильтр ввода
+            jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyTyped(java.awt.event.KeyEvent e) {
+          char a = e.getKeyChar();
+          if (!Character.isDigit(a)
+              && (a != '.')
+              && (a != '\b')) {
+            e.consume();
+          }
+        }
+      });
+    }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
+        // фильтр ввода
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyTyped(java.awt.event.KeyEvent e) {
+          char a = e.getKeyChar();
+          if (!Character.isDigit(a)
+              && (a != '.')
+              && (a != '\b')) {
+            e.consume();
+          }
+        }
+      });
+    }//GEN-LAST:event_jTextField2KeyPressed
     
     public static void main(String args[]) {
           try { 
